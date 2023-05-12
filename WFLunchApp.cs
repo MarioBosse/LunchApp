@@ -9,7 +9,7 @@ namespace LunchApp
         private String AppName = "LunchApp";
         private Logger _logger;
         private FormLunchAppConfigurator lunchAppConfigurator = new FormLunchAppConfigurator("");
-        public ObservableCollection<FormLunchAppConfigurator> ListInstallation { get; private set; }
+        public ObservableCollection<FormLunchAppConfigurator>? ListInstallation { get; private set; }
 
         public WFLunchApp()
         {

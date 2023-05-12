@@ -11,12 +11,13 @@ namespace LunchApp.IO
     {
         private String completeFilename = String.Empty;
         public String CompleteFilename { get { return completeFilename; } set { StructFilename(value); } }
-        public String Filename { get;private set; }
-        public String NameFile { get; private set; }
-        public String Path { get;private set; }
-        public String Extension { get; private set; }
+        public String? Filename { get;private set; }
+        public String? NameFile { get; private set; }
+        public String? Path { get;private set; }
+        public String? Extension { get; private set; }
 
-        private FileStream file;
+        public FileStream? file;
+        public long Lenght { get { return file.Length; } }
 
         public Fichier() 
         {
@@ -40,22 +41,27 @@ namespace LunchApp.IO
             Filename = filename[0];
             Extension = filename[1];
         }
-
         public void Open()
         {
             file = new FileStream(CompleteFilename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
         }
-        public String[] Read()
+        public String[]? Read()
         {
             return null;
         }
         public void Write(String text)
         {
-            file.Write(Encoding.ASCII.GetBytes(text), 0, text.Length);
+            if (file != null)
+            {
+                file.Write(Encoding.ASCII.GetBytes(text), 0, text.Length);
+            }
         }
         public void WriteLine(String text)
         {
-            file.Write(Encoding.ASCII.GetBytes(text + '\n'), 0, text.Length);
+            if (file != null)
+            {
+                file.Write(Encoding.ASCII.GetBytes(text + '\n'), 0, text.Length);
+            }
         }
         public void ReplaceTextFile(String[] text)
         {
