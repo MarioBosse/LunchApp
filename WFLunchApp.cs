@@ -50,9 +50,9 @@ namespace LunchApp
         }
         private Boolean OneIsReady()
         {
-            foreach(UCLunchAppConfigurator.FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
+            foreach (UCLunchAppConfigurator.FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
             {
-                if(uc.IsReady) return true;
+                if (uc.IsReady) return true;
             }
             return false;
         }

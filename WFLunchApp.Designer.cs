@@ -129,7 +129,7 @@
             flowLayoutPanelUCInstallationConfiguration.Location = new Point(12, 52);
             flowLayoutPanelUCInstallationConfiguration.Margin = new Padding(3, 2, 3, 2);
             flowLayoutPanelUCInstallationConfiguration.Name = "flowLayoutPanelUCInstallationConfiguration";
-            flowLayoutPanelUCInstallationConfiguration.Size = new Size(574, 362);
+            flowLayoutPanelUCInstallationConfiguration.Size = new Size(639, 362);
             flowLayoutPanelUCInstallationConfiguration.TabIndex = 9;
             flowLayoutPanelUCInstallationConfiguration.ControlAdded += flowLayoutPanelUCInstallationConfiguration_ControlAdded;
             flowLayoutPanelUCInstallationConfiguration.ControlRemoved += flowLayoutPanelUCInstallationConfiguration_ControlAdded;
