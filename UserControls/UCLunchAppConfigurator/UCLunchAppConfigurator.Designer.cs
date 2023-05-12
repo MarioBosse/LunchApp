@@ -102,7 +102,7 @@
             // 
             // FormLunchAppConfigurator
             // 
-            ClientSize = new Size(583, 54);
+            ClientSize = new Size(621, 54);
             Controls.Add(numericUpDown1);
             Controls.Add(buttonSelectProgram);
             Controls.Add(textBoxProgramToLunch);
