@@ -53,12 +53,12 @@
             // 
             textBoxDefaultInstallationPath.Location = new Point(12, 27);
             textBoxDefaultInstallationPath.Name = "textBoxDefaultInstallationPath";
-            textBoxDefaultInstallationPath.Size = new Size(451, 23);
+            textBoxDefaultInstallationPath.Size = new Size(558, 23);
             textBoxDefaultInstallationPath.TabIndex = 1;
             // 
             // buttonRootInstallationPath
             // 
-            buttonRootInstallationPath.Location = new Point(713, 27);
+            buttonRootInstallationPath.Location = new Point(576, 27);
             buttonRootInstallationPath.Name = "buttonRootInstallationPath";
             buttonRootInstallationPath.Size = new Size(75, 23);
             buttonRootInstallationPath.TabIndex = 2;
@@ -71,7 +71,7 @@
             buttonUp.BackgroundImage = (Image)resources.GetObject("buttonUp.BackgroundImage");
             buttonUp.BackgroundImageLayout = ImageLayout.Zoom;
             buttonUp.Enabled = false;
-            buttonUp.Location = new Point(752, 164);
+            buttonUp.Location = new Point(656, 164);
             buttonUp.Name = "buttonUp";
             buttonUp.Size = new Size(36, 30);
             buttonUp.TabIndex = 4;
@@ -82,7 +82,7 @@
             buttonPlus.BackgroundImage = (Image)resources.GetObject("buttonPlus.BackgroundImage");
             buttonPlus.BackgroundImageLayout = ImageLayout.Zoom;
             buttonPlus.Enabled = false;
-            buttonPlus.Location = new Point(752, 197);
+            buttonPlus.Location = new Point(656, 197);
             buttonPlus.Name = "buttonPlus";
             buttonPlus.Size = new Size(36, 30);
             buttonPlus.TabIndex = 5;
@@ -94,7 +94,7 @@
             buttonDown.BackgroundImage = (Image)resources.GetObject("buttonDown.BackgroundImage");
             buttonDown.BackgroundImageLayout = ImageLayout.Zoom;
             buttonDown.Enabled = false;
-            buttonDown.Location = new Point(752, 263);
+            buttonDown.Location = new Point(656, 263);
             buttonDown.Name = "buttonDown";
             buttonDown.Size = new Size(36, 30);
             buttonDown.TabIndex = 7;
@@ -105,7 +105,7 @@
             buttonMinus.BackgroundImage = (Image)resources.GetObject("buttonMinus.BackgroundImage");
             buttonMinus.BackgroundImageLayout = ImageLayout.Zoom;
             buttonMinus.Enabled = false;
-            buttonMinus.Location = new Point(752, 230);
+            buttonMinus.Location = new Point(656, 230);
             buttonMinus.Name = "buttonMinus";
             buttonMinus.Size = new Size(36, 30);
             buttonMinus.TabIndex = 6;
@@ -117,7 +117,7 @@
             buttonLunchInstallation.Location = new Point(12, 419);
             buttonLunchInstallation.Margin = new Padding(3, 2, 3, 2);
             buttonLunchInstallation.Name = "buttonLunchInstallation";
-            buttonLunchInstallation.Size = new Size(734, 22);
+            buttonLunchInstallation.Size = new Size(639, 22);
             buttonLunchInstallation.TabIndex = 8;
             buttonLunchInstallation.Text = "Lancez les installations";
             buttonLunchInstallation.UseVisualStyleBackColor = true;
@@ -138,7 +138,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(697, 450);
             Controls.Add(flowLayoutPanelUCInstallationConfiguration);
             Controls.Add(buttonLunchInstallation);
             Controls.Add(buttonDown);

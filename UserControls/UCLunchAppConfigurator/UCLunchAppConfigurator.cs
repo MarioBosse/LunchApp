@@ -3,7 +3,9 @@ namespace UCLunchAppConfigurator
     public partial class FormLunchAppConfigurator : Control
     {
         public Boolean IsReady { get; private set; }
+        public Boolean IsRunning { get; private set; }
         public String DefaultPathInstallation { get; private set; }
+
         public FormLunchAppConfigurator(String defaultPath = "")
         {
             DefaultPathInstallation = defaultPath;
