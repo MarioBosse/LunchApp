@@ -4,6 +4,8 @@ namespace UCLunchAppConfigurator
     {
         public Boolean IsReady { get; private set; }
         public Boolean IsRunning { get; private set; }
+        public UInt16 NbRebootDone { get; private set; }
+
         public String DefaultPathInstallation { get; private set; }
 
         public FormLunchAppConfigurator(String defaultPath = "")

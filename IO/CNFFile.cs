@@ -74,12 +74,14 @@ namespace LunchApp.IO
             {
                 CNF.Add(new CNF { ID = posID++,
                                   IsRunning = control.IsRunning,
-                                  NbReboot = Convert.ToUInt16(control.numericUpDown1.Value),
-                                  NbRebootDone = Convert.ToUInt16(3),
-                                  InstallationDone = false,
+                                  NbReboot = Convert.ToUInt16(control.numericUpDownNbReboot.Value),
+                                  NbRebootDone = control.NbRebootDone,
+                                  InstallationDone = (control.checkBoxInstallationState.CheckState == CheckState.Indeterminate ||
+                                                     (control.checkBoxInstallationState.CheckState == CheckState.Unchecked) ? false : true),
                                   Path = control.textBoxProgramPath.Text,
                                   Programm = control.textBoxProgramToLunch.Text});
             }
+            WriteConfig();
         }
     }
 }
