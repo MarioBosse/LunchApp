@@ -76,6 +76,7 @@
             buttonUp.Size = new Size(36, 30);
             buttonUp.TabIndex = 4;
             buttonUp.UseVisualStyleBackColor = true;
+            buttonUp.Visible = false;
             // 
             // buttonPlus
             // 
@@ -99,6 +100,7 @@
             buttonDown.Size = new Size(36, 30);
             buttonDown.TabIndex = 7;
             buttonDown.UseVisualStyleBackColor = true;
+            buttonDown.Visible = false;
             // 
             // buttonMinus
             // 
@@ -110,6 +112,7 @@
             buttonMinus.Size = new Size(36, 30);
             buttonMinus.TabIndex = 6;
             buttonMinus.UseVisualStyleBackColor = true;
+            buttonMinus.Visible = false;
             // 
             // buttonLunchInstallation
             // 

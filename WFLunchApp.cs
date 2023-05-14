@@ -46,7 +46,7 @@ namespace LunchApp
         }
         private void ucLunchAppConfigurator_Leave(object sender, EventArgs e)
         {
-            if(((FormLunchAppConfigurator)sender).IsReady)
+            if (((FormLunchAppConfigurator)sender).IsReady)
             {
                 _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
 
