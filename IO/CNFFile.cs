@@ -42,6 +42,20 @@ namespace LunchApp.IO
                 Pathname = result[0];
                 if (result[2].Length > 0)
                 {
+                    for (int i = 2; i < result.Count - 1; i++)
+                    {
+                        String[] cnf = result[i].Split(',');
+                        CNF.Add(new CNF()
+                        {
+                            ID = Convert.ToUInt16(cnf[0]),
+                            IsRunning = Convert.ToBoolean(cnf[1]),
+                            NbReboot = Convert.ToUInt16(cnf[2]),
+                            NbRebootDone = Convert.ToUInt16(cnf[3]),
+                            InstallationDone = Convert.ToBoolean(cnf[4]),
+                            Path = cnf[5],
+                            Programm = cnf[6]
+                        });
+                    }
                 }
             }
         }

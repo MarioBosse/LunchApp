@@ -43,7 +43,7 @@
             // 
             labelPathInstallation.AccessibleRole = AccessibleRole.ScrollBar;
             labelPathInstallation.AutoSize = true;
-            labelPathInstallation.Location = new Point(6, 5);
+            labelPathInstallation.Location = new Point(1, 4);
             labelPathInstallation.Name = "labelPathInstallation";
             labelPathInstallation.Size = new Size(132, 15);
             labelPathInstallation.TabIndex = 0;
@@ -52,7 +52,7 @@
             // labelProgramToLunch
             // 
             labelProgramToLunch.AutoSize = true;
-            labelProgramToLunch.Location = new Point(300, 5);
+            labelProgramToLunch.Location = new Point(295, 4);
             labelProgramToLunch.Name = "labelProgramToLunch";
             labelProgramToLunch.Size = new Size(114, 15);
             labelProgramToLunch.TabIndex = 1;
@@ -61,7 +61,7 @@
             // labelNbReboot
             // 
             labelNbReboot.AutoSize = true;
-            labelNbReboot.Location = new Point(481, 5);
+            labelNbReboot.Location = new Point(475, 4);
             labelNbReboot.Name = "labelNbReboot";
             labelNbReboot.Size = new Size(96, 15);
             labelNbReboot.TabIndex = 2;
@@ -70,7 +70,7 @@
             // textBoxProgramPath
             // 
             textBoxProgramPath.Enabled = false;
-            textBoxProgramPath.Location = new Point(6, 23);
+            textBoxProgramPath.Location = new Point(1, 22);
             textBoxProgramPath.Name = "textBoxProgramPath";
             textBoxProgramPath.Size = new Size(288, 23);
             textBoxProgramPath.TabIndex = 1;
@@ -78,14 +78,14 @@
             // textBoxProgramToLunch
             // 
             textBoxProgramToLunch.Enabled = false;
-            textBoxProgramToLunch.Location = new Point(300, 23);
+            textBoxProgramToLunch.Location = new Point(295, 21);
             textBoxProgramToLunch.Name = "textBoxProgramToLunch";
             textBoxProgramToLunch.Size = new Size(114, 23);
             textBoxProgramToLunch.TabIndex = 2;
             // 
             // buttonSelectProgram
             // 
-            buttonSelectProgram.Location = new Point(420, 23);
+            buttonSelectProgram.Location = new Point(415, 22);
             buttonSelectProgram.Name = "buttonSelectProgram";
             buttonSelectProgram.Size = new Size(54, 23);
             buttonSelectProgram.TabIndex = 3;
@@ -95,7 +95,7 @@
             // 
             // numericUpDownNbReboot
             // 
-            numericUpDownNbReboot.Location = new Point(481, 23);
+            numericUpDownNbReboot.Location = new Point(475, 22);
             numericUpDownNbReboot.Maximum = new decimal(new int[] { 3, 0, 0, 0 });
             numericUpDownNbReboot.Name = "numericUpDownNbReboot";
             numericUpDownNbReboot.Size = new Size(96, 23);
@@ -105,7 +105,7 @@
             // 
             checkBoxInstallationState.Checked = true;
             checkBoxInstallationState.CheckState = CheckState.Indeterminate;
-            checkBoxInstallationState.Location = new Point(591, 23);
+            checkBoxInstallationState.Location = new Point(428, -3);
             checkBoxInstallationState.Name = "checkBoxInstallationState";
             checkBoxInstallationState.Size = new Size(22, 24);
             checkBoxInstallationState.TabIndex = 0;
@@ -113,7 +113,8 @@
             // 
             // FormLunchAppConfigurator
             // 
-            ClientSize = new Size(619, 52);
+            BackColor = SystemColors.Control;
+            ClientSize = new Size(576, 49);
             Controls.Add(checkBoxInstallationState);
             Controls.Add(numericUpDownNbReboot);
             Controls.Add(buttonSelectProgram);

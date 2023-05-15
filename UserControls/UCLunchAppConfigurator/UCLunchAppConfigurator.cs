@@ -5,13 +5,24 @@ namespace UCLunchAppConfigurator
         public Boolean IsReady { get; private set; }
         public Boolean IsRunning { get; private set; }
         public UInt16 NbRebootDone { get; private set; }
-
         public String DefaultPathInstallation { get; private set; }
 
         public FormLunchAppConfigurator(String defaultPath = "")
         {
             DefaultPathInstallation = defaultPath;
             InitializeComponent();
+        }
+        public FormLunchAppConfigurator(String defaultPath, LunchApp.Models.CNF cnf)
+        {
+            DefaultPathInstallation = defaultPath;
+            InitializeComponent();
+
+            textBoxProgramPath.Text = cnf.Path;
+            textBoxProgramToLunch.Text = cnf.Programm;
+            numericUpDownNbReboot.Value = cnf.NbReboot;
+
+            checkBoxInstallationState.Checked = cnf.InstallationDone;
+            NbRebootDone = cnf.NbRebootDone;
         }
 
         public void buttonSelectProgram_Click(object sender, EventArgs e)
@@ -52,12 +63,16 @@ namespace UCLunchAppConfigurator
             return result;
         }
 
-        private void FormLunchAppConfigurator_Leave(object sender, EventArgs e)
+        public void SetReady()
         {
             if (textBoxProgramPath.Text.Length == 0) return;
             if (textBoxProgramToLunch.Text.Length == 0) return;
 
-            IsReady = true;
+            this.IsReady = true;
+        }
+        private void FormLunchAppConfigurator_Leave(object sender, EventArgs e)
+        {
+            SetReady();
         }
     }
 }
