@@ -39,8 +39,10 @@ namespace LunchApp
             Command.StartInfo = new ProcessStartInfo();
             Command.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             Command.StartInfo.FileName = "CMD.exe";
-            Command.StartInfo.Arguments = "/C";
+            Command.StartInfo.Arguments = "";
             Command.StartInfo.CreateNoWindow = true;
+            Command.StartInfo.UseShellExecute = false;
+            Command.StartInfo.ErrorDialog = false;
         }
         private void AssignCNFConfig()
         {
@@ -133,8 +135,19 @@ namespace LunchApp
                 progressBarTraitement.Step = 1;
                 foreach (FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
                 {
+                    // Si l'installation est complété, passer a la suivante.
                     if (uc.checkBoxInstallationState.CheckState != CheckState.Checked)
                     {
+                        // Démarrage de l'installation
+                        Command.StartInfo.FileName = textBoxDefaultInstallationPath.Text + uc.textBoxProgramPath.Text + uc.textBoxProgramToLunch;
+                        
+                        // Si il y a plusieur démarrage, ajouter un à NBReboot
+                        // Sauvegarder le fichier de configuration
+                        // Lancer l'installation
+                        Command.Start();
+
+                        // Nombre de redémarrage requis avant que l'installation soit complétée
+                        // Redémarre si requis
                     }
                     progressBarTraitement.PerformStep();
                 }
