@@ -1,5 +1,6 @@
 using LunchApp.IO;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using UCLunchAppConfigurator;
 
 namespace LunchApp
@@ -7,18 +8,57 @@ namespace LunchApp
     public partial class WFLunchApp : Form
     {
         private String AppName = "LunchApp";
+        Process Command = new Process();
         private Logger _logger;
+        private CNFFile _cnf;
         private FormLunchAppConfigurator lunchAppConfigurator = new FormLunchAppConfigurator("");
         public ObservableCollection<FormLunchAppConfigurator>? ListInstallation { get; private set; }
 
         public WFLunchApp()
         {
             _logger = new Logger(AppName);
+            _cnf = new CNFFile("Traitement.cnf");
+
             InitializeComponent();
-            //this.DataContext = this;
+            PrepareCommand();
+
+            AssignCNFConfig();
+            if (flowLayoutPanelUCInstallationConfiguration.Controls.Count > 0 && OneIsReady())
+            {
+                buttonLunchInstallation.Enabled = true;
+            }
+            else
+            {
+                buttonLunchInstallation.Enabled = false;
+            }
             _logger.AddLogging(AppName, "Lancemnt de l'application");
         }
 
+        private void PrepareCommand()
+        {
+            Command.StartInfo = new ProcessStartInfo();
+            Command.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            Command.StartInfo.FileName = "CMD.exe";
+            Command.StartInfo.Arguments = "";
+            Command.StartInfo.CreateNoWindow = true;
+            Command.StartInfo.UseShellExecute = false;
+            Command.StartInfo.ErrorDialog = false;
+        }
+        private void AssignCNFConfig()
+        {
+            if (_cnf.Pathname.Length > 0)
+            {
+                textBoxDefaultInstallationPath.Text = _cnf.Pathname;
+                buttonPlus.Enabled = true;
+                flowLayoutPanelUCInstallationConfiguration.Enabled = true;
+                foreach (Models.CNF cnf in _cnf.CNF)
+                {
+                    FormLunchAppConfigurator form = new FormLunchAppConfigurator(_cnf.Pathname, cnf);
+                    form.SetReady();
+                    flowLayoutPanelUCInstallationConfiguration.Controls.Add(form);
+                }
+            }
+        }
         private void buttonRootInstallationPath_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog setFolder = new FolderBrowserDialog();
@@ -27,13 +67,23 @@ namespace LunchApp
                 textBoxDefaultInstallationPath.Text = setFolder.SelectedPath;
                 buttonPlus.Enabled = true;
                 flowLayoutPanelUCInstallationConfiguration.Enabled = true;
+
+                _cnf.SetPathName(textBoxDefaultInstallationPath.Text);
             }
         }
+        private void ucLunchAppConfigurator_Leave(object sender, EventArgs e)
+        {
+            if (((FormLunchAppConfigurator)sender).IsReady)
+            {
+                _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
 
+                buttonLunchInstallation.Enabled = true;
+            }
+        }
         private void buttonPlus_Click(object sender, EventArgs e)
         {
             FormLunchAppConfigurator toAdd = new UCLunchAppConfigurator.FormLunchAppConfigurator(textBoxDefaultInstallationPath.Text);
-            //toAdd.Show();
+            toAdd.Leave += ucLunchAppConfigurator_Leave;
             flowLayoutPanelUCInstallationConfiguration.Controls.Add(toAdd);
         }
 
@@ -50,11 +100,58 @@ namespace LunchApp
         }
         private Boolean OneIsReady()
         {
-            foreach (UCLunchAppConfigurator.FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
+            foreach (FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
             {
                 if (uc.IsReady) return true;
             }
             return false;
+        }
+
+        private void WFLunchApp_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
+        }
+
+        private void flowLayoutPanelUCInstallationConfiguration_CursorChanged(object sender, EventArgs e)
+        {
+            if (flowLayoutPanelUCInstallationConfiguration.Controls.Count > 0 && OneIsReady())
+            {
+                buttonLunchInstallation.Enabled = true;
+            }
+            else
+            {
+                buttonLunchInstallation.Enabled = false;
+            }
+        }
+
+        private void buttonLunchInstallation_Click(object sender, EventArgs e)
+        {
+            UserConfirmation userConfirmation = new UserConfirmation();
+            var result = userConfirmation.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                progressBarTraitement.Maximum = flowLayoutPanelUCInstallationConfiguration.Controls.Count;
+                progressBarTraitement.Step = 1;
+                foreach (FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
+                {
+                    // Si l'installation est complété, passer a la suivante.
+                    if (uc.checkBoxInstallationState.CheckState != CheckState.Checked)
+                    {
+                        // Démarrage de l'installation
+                        Command.StartInfo.FileName = textBoxDefaultInstallationPath.Text + uc.textBoxProgramPath.Text + uc.textBoxProgramToLunch;
+                        
+                        // Si il y a plusieur démarrage, ajouter un à NBReboot
+                        // Sauvegarder le fichier de configuration
+                        // Lancer l'installation
+                        Command.Start();
+
+                        // Nombre de redémarrage requis avant que l'installation soit complétée
+                        // Redémarre si requis
+                    }
+                    progressBarTraitement.PerformStep();
+                }
+            }
         }
     }
 }
