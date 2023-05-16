@@ -138,6 +138,12 @@ namespace LunchApp.Forms
                 progressBarTraitement.Step = 1;
                 foreach (FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
                 {
+                    // Vérifier si l'application a déjà été lancé, est-ce complété, ...
+                    if(uc.IsRunning && uc.NbRebootDone == uc.numericUpDownNbReboot.Value)
+                    {
+                        uc.checkBoxInstallationState.Checked = true;
+                        _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);                        
+                    }
                     // Si l'installation est complété, passer a la suivante.
                     if (uc.checkBoxInstallationState.CheckState != CheckState.Checked)
                     {
@@ -148,10 +154,10 @@ namespace LunchApp.Forms
                         uc.checkBoxInstallationState.CheckState = CheckState.Unchecked;
                         uc.StartRunning();
 
+                        // Sauvegarder le fichier de configuration
                         _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
 
                         // Si il y a plusieur démarrage, ajouter un à NBReboot
-                        // Sauvegarder le fichier de configuration
                         // Lancer l'installation
                         Command.StartInfo = psi;
                         Command.Start();
@@ -159,11 +165,12 @@ namespace LunchApp.Forms
                         Command.WaitForExitAsync();
 
                         // Nombre de redémarrage requis avant que l'installation soit complétée
-                        if(uc.NbRebootDone < uc.numericUpDownNbReboot.Value)
-                        {
-                            uc.NbRebootDone++;
-                        }
                         // Redémarre si requis
+                        if (uc.Rebooting())
+                        {
+                            _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
+                            Process.Start("cmd.exe /c shutdown", "-rf");
+                        }
                     }
                     progressBarTraitement.PerformStep();
                 }

@@ -73,6 +73,15 @@ namespace LunchApp.UserControls.UCLunchAppConfigurator
         {
             IsRunning = true;
         }
+        public bool Rebooting()
+        {
+            if (NbRebootDone < numericUpDownNbReboot.Value)
+            {
+                NbRebootDone++;
+                return true;
+            }
+            return false;
+        }
         public void SetReady()
         {
             if (textBoxProgramPath.Text.Length == 0) return;
