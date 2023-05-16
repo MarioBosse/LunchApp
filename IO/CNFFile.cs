@@ -1,12 +1,6 @@
 ﻿using LunchApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using LunchApp.UserControls.UCLunchAppConfigurator;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using UCLunchAppConfigurator;
-using static System.Windows.Forms.DataFormats;
 
 namespace LunchApp.IO
 {
@@ -75,6 +69,7 @@ namespace LunchApp.IO
                 toWrite += String.Format(_format, cnf.ID, cnf.IsRunning, cnf.NbReboot, cnf.NbRebootDone, cnf.InstallationDone, cnf.Path, cnf.Programm);
                 toWrite += "\n";
             }
+            toWrite.Append<char>((char)0x1a);
             WriteFile(toWrite);
             Close();
             Open();
