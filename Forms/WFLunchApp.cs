@@ -13,7 +13,7 @@ namespace LunchApp.Forms
         Process Command = new Process();
         private Logger _logger;
         private CNFFile _cnf;
-        private ProcessStartInfo psi = new ProcessStartInfo();
+        private ProcessStartInfo psi;
 
         public ObservableCollection<FormLunchAppConfigurator>? ListInstallation { get; private set; }
 
@@ -23,7 +23,6 @@ namespace LunchApp.Forms
             _cnf = new CNFFile("Traitement.cnf");
 
             InitializeComponent();
-            PrepareCommand();
 
             AssignCNFConfig();
             if (flowLayoutPanelUCInstallationConfiguration.Controls.Count > 0 && OneIsReady())
@@ -37,15 +36,16 @@ namespace LunchApp.Forms
             _logger.AddLogging(AppName, "Lancemnt de l'application");
         }
 
-        private void PrepareCommand()
+        private void PrepareCommand(String path)
         {
+            psi = new ProcessStartInfo(path);
             psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.FileName = "CMD.exe /C ";
+            psi.FileName = "test.bat ";
             psi.CreateNoWindow = true;
             psi.UseShellExecute = false;
             psi.ErrorDialog = false;
 
-
+            psi.WorkingDirectory = path;
         }
         private void AssignCNFConfig()
         {
@@ -125,30 +125,32 @@ namespace LunchApp.Forms
             UserConfirmation userConfirmation = new UserConfirmation();
             if (userConfirmation.ShowDialog() == DialogResult.OK)
             {
-                var SecurePassword = new SecureString();
+                SecureString SecurePassword = new SecureString();
                 foreach (char c in userConfirmation.textBoxPassword.Text)
                 {
                     SecurePassword.AppendChar(c);
                 }
-                psi.UserName = userConfirmation.textBoxUtilisateur.Text;
-                psi.Password = SecurePassword;
-                psi.Domain = userConfirmation.textBoxDomaine.Text;
-
                 progressBarTraitement.Maximum = flowLayoutPanelUCInstallationConfiguration.Controls.Count;
                 progressBarTraitement.Step = 1;
                 foreach (FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
                 {
+                    PrepareCommand(_cnf.Pathname + '\\' + uc.textBoxProgramPath.Text + '\\');
+
+                    psi.UserName = userConfirmation.textBoxUtilisateur.Text;
+                    psi.Password = SecurePassword;
+                    psi.Domain = userConfirmation.textBoxDomaine.Text;
+
                     // Vérifier si l'application a déjà été lancé, est-ce complété, ...
-                    if(uc.IsRunning && uc.NbRebootDone == uc.numericUpDownNbReboot.Value)
+                    if (uc.IsRunning && uc.NbRebootDone == uc.numericUpDownNbReboot.Value)
                     {
                         uc.checkBoxInstallationState.Checked = true;
-                        _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);                        
+                        _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls) ;                        
                     }
                     // Si l'installation est complété, passer a la suivante.
                     if (uc.checkBoxInstallationState.CheckState != CheckState.Checked)
                     {
                         // Démarrage de l'installation
-                        psi.FileName += "\"" + textBoxDefaultInstallationPath.Text + '\\' + uc.textBoxProgramPath.Text + '\\' + uc.textBoxProgramToLunch.Text + "\"";
+                        psi.FileName = uc.textBoxProgramToLunch.Text;
 
                         // Modifier l'état du traitement de l'installation
                         uc.checkBoxInstallationState.CheckState = CheckState.Unchecked;
