@@ -40,7 +40,7 @@ namespace LunchApp.Forms
         {
             psi = new ProcessStartInfo(path);
             psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.FileName = "test.bat ";
+            psi.Arguments = "/C " + path;
             psi.CreateNoWindow = true;
             psi.UseShellExecute = false;
             psi.ErrorDialog = false;
@@ -122,23 +122,23 @@ namespace LunchApp.Forms
         {
             _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
 
-            UserConfirmation userConfirmation = new UserConfirmation();
-            if (userConfirmation.ShowDialog() == DialogResult.OK)
+            //UserConfirmation userConfirmation = new UserConfirmation();
+            //if (userConfirmation.ShowDialog() == DialogResult.OK)
             {
-                SecureString SecurePassword = new SecureString();
-                foreach (char c in userConfirmation.textBoxPassword.Text)
-                {
-                    SecurePassword.AppendChar(c);
-                }
+                //SecureString SecurePassword = new SecureString();
+                //foreach (char c in userConfirmation.textBoxPassword.Text)
+                //{
+                //    SecurePassword.AppendChar(c);
+                //}
                 progressBarTraitement.Maximum = flowLayoutPanelUCInstallationConfiguration.Controls.Count;
                 progressBarTraitement.Step = 1;
                 foreach (FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
                 {
                     PrepareCommand(_cnf.Pathname + '\\' + uc.textBoxProgramPath.Text + '\\');
 
-                    psi.UserName = userConfirmation.textBoxUtilisateur.Text;
-                    psi.Password = SecurePassword;
-                    psi.Domain = userConfirmation.textBoxDomaine.Text;
+                    //psi.UserName = userConfirmation.textBoxUtilisateur.Text;
+                    //psi.Password = SecurePassword;
+                    //psi.Domain = userConfirmation.textBoxDomaine.Text;
 
                     // Vérifier si l'application a déjà été lancé, est-ce complété, ...
                     if (uc.IsRunning && uc.NbRebootDone == uc.numericUpDownNbReboot.Value)
@@ -161,10 +161,13 @@ namespace LunchApp.Forms
 
                         // Si il y a plusieur démarrage, ajouter un à NBReboot
                         // Lancer l'installation
-                        Command.StartInfo = psi;
-                        Command.Start();
-                        Command.WaitForExit();
-                        Command.WaitForExitAsync();
+                        //Command.StartInfo = psi;
+                        String argument = '"' + psi.Arguments + psi.FileName + '"';
+
+                        var Com = System.Diagnostics.Process.Start("cmd", argument);
+                        Com.WaitForExit();
+                        //Command.WaitForExit();
+                        //Command.WaitForExitAsync();
 
                         // Nombre de redémarrage requis avant que l'installation soit complétée
                         // Redémarre si requis
