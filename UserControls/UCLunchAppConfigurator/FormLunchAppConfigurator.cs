@@ -1,3 +1,5 @@
+using LunchApp.Models;
+
 namespace LunchApp.UserControls.UCLunchAppConfigurator
 {
     public partial class FormLunchAppConfigurator : Control
@@ -7,6 +9,8 @@ namespace LunchApp.UserControls.UCLunchAppConfigurator
         public UInt16 ID { get; private set; } = 0;
         public UInt16 NbRebootDone { get; private set; }
         public String DefaultPathInstallation { get; private set; }
+
+        public Boolean InstallationDone { get; set; }
 
         public FormLunchAppConfigurator(String defaultPath, UInt16 nextID)
         {
@@ -19,13 +23,15 @@ namespace LunchApp.UserControls.UCLunchAppConfigurator
             DefaultPathInstallation = defaultPath;
             InitializeComponent();
 
-            if(cnf.ID != 0)
+            if (cnf.ID != 0)
             {
                 ID = cnf.ID;
             }
+            InstallationDone = cnf.InstallationDone;
             textBoxProgramPath.Text = cnf.Path;
             textBoxProgramToLunch.Text = cnf.Programm;
             numericUpDownNbReboot.Value = cnf.NbReboot;
+            IsRunning = cnf.IsRunning;
 
             checkBoxInstallationState.Checked = cnf.InstallationDone;
             NbRebootDone = cnf.NbRebootDone;

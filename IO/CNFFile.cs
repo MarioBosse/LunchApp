@@ -13,8 +13,11 @@ namespace LunchApp.IO
         public String RootPath { get; private set; } = String.Empty;
         public List<CNF> CNF { get; private set; } = new List<CNF>();
         public String _filename { get; private set; } = String.Empty;
+        public UInt16 NbProgress { get; private set; }
+
         public CNFFile(String filename)
         {
+            NbProgress = 0;
             _filename = BuildFilename(filename);
             CompleteFilename = Directory.GetCurrentDirectory() + "\\" + filename;
             Open();
@@ -31,6 +34,9 @@ namespace LunchApp.IO
         private void ReadConfig()
         {
             List<String> result = Encoding.ASCII.GetString(ReadAll()).Split('\n').ToList();
+            CNF.Clear();
+            NbProgress = 0;
+
             if(result.Count >= 3)
             {
                 Pathname = result[0];
@@ -49,6 +55,7 @@ namespace LunchApp.IO
                             Path = cnf[5],
                             Programm = cnf[6]
                         });
+                        NbProgress += (UInt16)(CNF[^1].NbReboot + 1);
                     }
                 }
             }

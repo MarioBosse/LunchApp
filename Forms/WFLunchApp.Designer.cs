@@ -143,18 +143,17 @@
             // 
             // progressBarTraitement
             // 
-            progressBarTraitement.Location = new Point(618, 191);
+            progressBarTraitement.Location = new Point(12, 446);
             progressBarTraitement.Name = "progressBarTraitement";
-            progressBarTraitement.Size = new Size(36, 251);
+            progressBarTraitement.Size = new Size(600, 14);
             progressBarTraitement.Step = 1;
-            progressBarTraitement.Style = ProgressBarStyle.Marquee;
             progressBarTraitement.TabIndex = 10;
             // 
             // WFLunchApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(658, 450);
+            ClientSize = new Size(658, 464);
             Controls.Add(progressBarTraitement);
             Controls.Add(flowLayoutPanelUCInstallationConfiguration);
             Controls.Add(buttonLunchInstallation);

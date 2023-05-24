@@ -2,7 +2,7 @@ using LunchApp.IO;
 using LunchApp.UserControls.UCLunchAppConfigurator;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Security;
+using System.Windows.Forms;
 
 namespace LunchApp.Forms
 {
@@ -10,7 +10,6 @@ namespace LunchApp.Forms
     {
         private String AppName = "LunchApp";
         private UInt16 nextID { get; set; } = 0;
-        Process Command = new Process();
         private Logger _logger;
         private CNFFile _cnf;
         private ProcessStartInfo? psi;
@@ -120,6 +119,7 @@ namespace LunchApp.Forms
 
         private void buttonLunchInstallation_Click(object sender, EventArgs e)
         {
+            flowLayoutPanelUCInstallationConfiguration.Enabled = false;
             _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
 
             //UserConfirmation userConfirmation = new UserConfirmation();
@@ -130,7 +130,8 @@ namespace LunchApp.Forms
                 //{
                 //    SecurePassword.AppendChar(c);
                 //}
-                progressBarTraitement.Maximum = flowLayoutPanelUCInstallationConfiguration.Controls.Count;
+                progressBarTraitement.Maximum = _cnf.NbProgress;
+                progressBarTraitement.Value = 0;
                 progressBarTraitement.Step = 1;
                 foreach (FormLunchAppConfigurator uc in flowLayoutPanelUCInstallationConfiguration.Controls)
                 {
@@ -144,8 +145,14 @@ namespace LunchApp.Forms
                     if (uc.IsRunning && uc.NbRebootDone == uc.numericUpDownNbReboot.Value)
                     {
                         uc.checkBoxInstallationState.Checked = true;
-                        _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls) ;                        
+                        uc.InstallationDone = (uc.checkBoxInstallationState.CheckState == CheckState.Indeterminate ||
+                                              (uc.checkBoxInstallationState.CheckState == CheckState.Unchecked) ? false : true);
+
+                        _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
                     }
+                    progressBarTraitement.PerformStep();
+                    progressBarTraitement.Show();
+
                     // Si l'installation est complété, passer a la suivante.
                     if (uc.checkBoxInstallationState.CheckState != CheckState.Checked)
                     {
@@ -168,8 +175,6 @@ namespace LunchApp.Forms
 
                         var Com = System.Diagnostics.Process.Start("cmd", argument);
                         Com.WaitForExit();
-                        //Command.WaitForExit();
-                        //Command.WaitForExitAsync();
 
                         // Nombre de redémarrage requis avant que l'installation soit complétée
                         // Redémarre si requis
@@ -177,13 +182,16 @@ namespace LunchApp.Forms
                         {
                             _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
                             Reboot.RestartForce();
-                            var c = Process.Start("shutdown", "-rf");
-                            c.WaitForExit();
+                        }
+                        else if(uc.numericUpDownNbReboot.Value == 0)
+                        {
+                            uc.InstallationDone = true;
+                            _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
                         }
                     }
-                    progressBarTraitement.PerformStep();
                 }
             }
+            flowLayoutPanelUCInstallationConfiguration.Enabled = true;
         }
     }
 }
