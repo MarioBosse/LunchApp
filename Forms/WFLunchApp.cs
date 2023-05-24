@@ -13,7 +13,7 @@ namespace LunchApp.Forms
         Process Command = new Process();
         private Logger _logger;
         private CNFFile _cnf;
-        private ProcessStartInfo psi;
+        private ProcessStartInfo? psi;
 
         public ObservableCollection<FormLunchAppConfigurator>? ListInstallation { get; private set; }
 
@@ -39,11 +39,11 @@ namespace LunchApp.Forms
         private void PrepareCommand(String path)
         {
             psi = new ProcessStartInfo(path);
-            psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.Arguments = "/C " + path;
-            psi.CreateNoWindow = true;
-            psi.UseShellExecute = false;
-            psi.ErrorDialog = false;
+            psi.WindowStyle = ProcessWindowStyle.Normal;
+            psi.Arguments = "/C " + '"' + path;
+            psi.CreateNoWindow = false;
+            psi.UseShellExecute = true;
+            psi.ErrorDialog = true;
 
             psi.WorkingDirectory = path;
         }
@@ -150,6 +150,8 @@ namespace LunchApp.Forms
                     if (uc.checkBoxInstallationState.CheckState != CheckState.Checked)
                     {
                         // Démarrage de l'installation
+                        if (psi == null) psi = new ProcessStartInfo();
+
                         psi.FileName = uc.textBoxProgramToLunch.Text;
 
                         // Modifier l'état du traitement de l'installation
@@ -162,7 +164,7 @@ namespace LunchApp.Forms
                         // Si il y a plusieur démarrage, ajouter un à NBReboot
                         // Lancer l'installation
                         //Command.StartInfo = psi;
-                        String argument = '"' + psi.Arguments + psi.FileName + '"';
+                        String argument = psi.Arguments + psi.FileName + '"';
 
                         var Com = System.Diagnostics.Process.Start("cmd", argument);
                         Com.WaitForExit();
@@ -174,7 +176,9 @@ namespace LunchApp.Forms
                         if (uc.Rebooting())
                         {
                             _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
-                            Process.Start("cmd.exe /c shutdown", "-rf");
+                            Reboot.RestartForce();
+                            var c = Process.Start("shutdown", "-rf");
+                            c.WaitForExit();
                         }
                     }
                     progressBarTraitement.PerformStep();
