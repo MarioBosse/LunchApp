@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace LunchApp.IO
 {
@@ -43,7 +38,7 @@ namespace LunchApp.IO
         }
         public void Open()
         {
-            file = new FileStream(CompleteFilename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+            file = new FileStream(CompleteFilename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
         }
         public void Close()
         {

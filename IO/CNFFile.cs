@@ -1,12 +1,6 @@
 ﻿using LunchApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using LunchApp.UserControls.UCLunchAppConfigurator;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using UCLunchAppConfigurator;
-using static System.Windows.Forms.DataFormats;
 
 namespace LunchApp.IO
 {
@@ -19,8 +13,11 @@ namespace LunchApp.IO
         public String RootPath { get; private set; } = String.Empty;
         public List<CNF> CNF { get; private set; } = new List<CNF>();
         public String _filename { get; private set; } = String.Empty;
+        public UInt16 NbProgress { get; private set; }
+
         public CNFFile(String filename)
         {
+            NbProgress = 0;
             _filename = BuildFilename(filename);
             CompleteFilename = Directory.GetCurrentDirectory() + "\\" + filename;
             Open();
@@ -37,6 +34,9 @@ namespace LunchApp.IO
         private void ReadConfig()
         {
             List<String> result = Encoding.ASCII.GetString(ReadAll()).Split('\n').ToList();
+            CNF.Clear();
+            NbProgress = 0;
+
             if(result.Count >= 3)
             {
                 Pathname = result[0];
@@ -55,6 +55,7 @@ namespace LunchApp.IO
                             Path = cnf[5],
                             Programm = cnf[6]
                         });
+                        NbProgress += (UInt16)(CNF[^1].NbReboot + 1);
                     }
                 }
             }
@@ -75,6 +76,7 @@ namespace LunchApp.IO
                 toWrite += String.Format(_format, cnf.ID, cnf.IsRunning, cnf.NbReboot, cnf.NbRebootDone, cnf.InstallationDone, cnf.Path, cnf.Programm);
                 toWrite += "\n";
             }
+            toWrite.Append<char>((char)0x1a);
             WriteFile(toWrite);
             Close();
             Open();

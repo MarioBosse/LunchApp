@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace LunchApp.IO
+﻿namespace LunchApp.IO
 {
     public class Logger : Fichier
     {

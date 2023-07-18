@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="images\" />
-    <Folder Include="UserControls\" />
   </ItemGroup>
 
   <ItemGroup>
