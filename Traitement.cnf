@@ -1,24 +1,188 @@
-\\10.23.32.8\Install\Siemens
-ID,IsRunning,NbReboot,NbRebootDone,InstallationDone,InstallationPath,Program2Execute
- 1,    False,       1,           0,           False,01 - SIMATIC v18,SilentInstall.bat
- 2,    False,       0,           0,           False,02 - SIMATIC - Step 7 Professional 2021 SR1,Setup.exe
- 3,    False,       0,           0,           False,03 - TIA Portal v18\,Start.exe
- 4,    False,       1,           0,           False,04 - SIMATIC - Startdrive\,Start.exe
- 5,    False,       0,           0,           False,05 - SIMATIC - S7-PLCSIM\,Start.exe
- 6,    False,       0,           0,           False,06 - SIMATIC - S7-PLCSIM Advanced\,Start.exe
- 7,    False,       0,           0,           False,07 - SIMATIS - WinCC Unified - PC Runtime\,Start.exe
- 8,    False,       0,           0,           False,08 - SIMATIC -WinCC Runtime Advanced\,Start.exe
- 9,    False,       0,           0,           False,09 - SIMATIC - ODK v2.5\,SilentInstall_ODK1500S.bat
-10,    False,       0,           0,           False,10 - SIMATIC - S7 Distributed Safety v5.4 SP5 Update 2\,Setup.exe
-11,    False,       0,           0,           False,11 - SIMATIC Step 7 - CFC\,Start.exe
-12,    False,       0,           0,           False,12 - SIMATIC - Target for Simulink\,SilentInstall_Target_1500S.bat
-13,    False,       0,           0,           False,01 - SIMATIC v18\Support\,AuditViewer_V72.exe
-14,    False,       0,           0,           False,01 - SIMATIC v18\Support\,AuditViewer_V72_00_Upd1.exe
-15,    False,       0,           0,           False,01 - SIMATIC v18\Support\,SIMATIC_Migration_Tool_TIA_V18.exe
-16,    False,       0,           0,           False,01 - SIMATIC v18\Support\,SIMATIC_ProSave_V18.exe
-17,    False,       0,           0,           False,01 - SIMATIC v18\Support\,SIMATIC_S7PCT_V35_SP3.exe
-18,    False,       0,           0,           False,01 - SIMATIC v18\Support\,TIA_Portal_Cloud_Connector_V1_2_SP2.exe
-19,    False,       0,           0,           False,01 - SIMATIC v18\Support\,TIA_Portal_Project_Server_V1_1.exe
-20,    False,       0,           0,           False,01 - SIMATIC v18\Support\,TIA_UMC_V2.exe
-21,    False,       0,           0,           False,01 - SIMATIC v18\Support\,TIA_Updater_Corporate_Configuration_Tool_V2_5_SP4.exe
-22,    False,       0,           0,           False,01 - SIMATIC v18\Support\,TIAADMIN_V2.exe
+{
+	"FileServer": "\\10.23.32.8\Install\Siemens",
+	"Installation" :
+	[
+		{
+			"Id": 1,
+			"Title" : "SIMATIC TIA Portal V18 WinCC BCA Ed",
+			"UnderExecution" : false,
+			"NbReboot": 2,
+			"WaitOnReboot" : "00:00:20",
+			"NbRebootDone": 0,
+			"InstallationDone": false,
+			"SourcePath" : "01 - SIMATIC v18",
+			"SourceFilename" : "Start.bat"
+		},
+		{
+			"Id" : 2,
+			"Title" : "",
+			"UnderExcution" :false,
+			"NbReboot" : 1,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "02 - SIMATIC - Step 7 Professional 2021 SR1",
+			"SourceFilename" : "Setup.exe"
+		},
+		{
+			"Id" : 3,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "03 - TIA Portal v18\",
+			"SourceFilename" : "Start.exe"
+		},
+		{
+			"Id" : 4,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "04 - SIMATIC - Startdrive\",
+			"SourceFilename" : "Start.exe"
+		},
+		{
+			"Id" : 5,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 1,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "05 - SIMATIC - S7-PLCSIM\,
+			"SourceFilename" : "Start.exe"
+		},
+		{
+			"Id" : 6,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 1,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "07 - SIMATIS - WinCC Unified - PC Runtime\",
+			"SourceFilename" : "Start.exe"
+		},
+		{
+			"Id" : 7,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "08 - SIMATIC -WinCC Runtime Advanced\",
+			"SourceFilename" : "Start.exe"
+		},
+		{
+			"Id" : 8,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "09 - SIMATIC - ODK v2.5\",
+			"SourceFilename" : "SilentInstall_ODK1500S.bat"
+		},
+		{
+			"Id" : 9,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "10 - SIMATIC - S7 Distributed Safety v5.4 SP5 Update 2\",
+			"SourceFilename" : "Setup.exe"
+		},
+		{
+			"Id" : 10,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "11 - SIMATIC Step 7 - CFC\",
+			"SourceFilename" : "Start.exe"
+		},
+		{
+			"Id" : 11,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 1,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "01 - SIMATIC v18\Support\",
+			"SourceFilename" : "AuditViewer_V72.exe"
+		},
+		{
+			"Id" : 12,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "01 - SIMATIC v18\Support\",
+			"SourceFilename" : "AuditViewer_V72_00_Upd1.exe"
+		},
+		{
+			"Id" : 13,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "01 - SIMATIC v18\Support\",
+			"SourceFilename" : "SIMATIC_Migration_Tool_TIA_V18.exe"
+		},
+		{
+			"Id" : 14,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "01 - SIMATIC v18\Support\",
+			"SourceFilename" : "SIMATIC_ProSave_V18.exe"
+		},
+		{
+			"Id" : 15,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "01 - SIMATIC v18\Support\",
+			"SourceFilename" : "SIMATIC_S7PCT_V35_SP3.exe"
+		},
+		{
+			"Id" : 16,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "01 - SIMATIC v18\Support\",
+			"SourceFilename" : "TIA_Portal_Cloud_Connector_V1_2_SP2.exe"
+		},
+		{
+			"Id" : 17,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 0,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "01 - SIMATIC v18\Support\",
+			"SourceFilename" : "TIA_Updater_Corporate_Configuration_Tool_V2_5_SP4.exe"
+		},
+		{
+			"Id" : 18,
+			"Title" : "",
+			"UnderExecution" : false,
+			"NbReboot" : 1,
+			"NbRebootDone" : 0,
+			"InstallationDone" : false,
+			"SourcePath" : "01 - SIMATIC v18\Support\",
+			"SourceFilename" : "TIAADMIN_V2.exe"
+		}
+	]
+}
+

@@ -21,6 +21,11 @@ namespace LunchApp.Forms
             _logger = new Logger(AppName);
             _cnf = new CNFFile("Traitement.cnf");
 
+
+
+
+
+
             InitializeComponent();
 
             AssignCNFConfig();
@@ -39,10 +44,9 @@ namespace LunchApp.Forms
         {
             psi = new ProcessStartInfo(path);
             psi.WindowStyle = ProcessWindowStyle.Normal;
-            psi.Arguments = "/C " + '"' + path;
-            psi.CreateNoWindow = false;
-            psi.UseShellExecute = true;
-            psi.ErrorDialog = true;
+            //psi.CreateNoWindow = false;
+            //psi.UseShellExecute = true;
+            //psi.ErrorDialog = true;
 
             psi.WorkingDirectory = path;
         }
@@ -171,9 +175,9 @@ namespace LunchApp.Forms
                         // Si il y a plusieur démarrage, ajouter un à NBReboot
                         // Lancer l'installation
                         //Command.StartInfo = psi;
-                        String argument = psi.Arguments + psi.FileName + '"';
+                        String argument = psi.Arguments + textBoxDefaultInstallationPath.Text + '\\' + uc.textBoxProgramPath.Text + '\\' + psi.FileName;
 
-                        var Com = System.Diagnostics.Process.Start("cmd", argument);
+                        var Com = Process.Start(argument);
                         Com.WaitForExit();
 
                         // Nombre de redémarrage requis avant que l'installation soit complétée
@@ -183,7 +187,7 @@ namespace LunchApp.Forms
                             _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
                             Reboot.RestartForce();
                         }
-                        else if(uc.numericUpDownNbReboot.Value == 0)
+                        else if (uc.numericUpDownNbReboot.Value == 0)
                         {
                             uc.InstallationDone = true;
                             _cnf.BuildCNF(flowLayoutPanelUCInstallationConfiguration.Controls);
@@ -192,6 +196,20 @@ namespace LunchApp.Forms
                 }
             }
             flowLayoutPanelUCInstallationConfiguration.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Process[] pList = Process.GetProcesses();
+            Debug.WriteLine("-------------------------------------------------------------------------");
+            foreach (Process p in pList)
+            {
+                if (p.MainWindowTitle.Length > 0)
+                {
+                    Debug.WriteLine("Process : {0} ID : {1} Window title {2}", p.ProcessName, p.Id, p.MainWindowTitle);
+                }
+            }
+            //IO.FocusMonitor fm = new FocusMonitor();
         }
     }
 }

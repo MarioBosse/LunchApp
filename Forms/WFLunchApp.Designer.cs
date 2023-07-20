@@ -39,6 +39,7 @@
             buttonLunchInstallation = new Button();
             flowLayoutPanelUCInstallationConfiguration = new FlowLayoutPanel();
             progressBarTraitement = new ProgressBar();
+            button1 = new Button();
             SuspendLayout();
             // 
             // labelOriginInstallationPath
@@ -149,11 +150,22 @@
             progressBarTraitement.Step = 1;
             progressBarTraitement.TabIndex = 10;
             // 
+            // button1
+            // 
+            button1.Location = new Point(618, 214);
+            button1.Name = "button1";
+            button1.Size = new Size(33, 23);
+            button1.TabIndex = 11;
+            button1.Text = "Test";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // WFLunchApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(658, 464);
+            Controls.Add(button1);
             Controls.Add(progressBarTraitement);
             Controls.Add(flowLayoutPanelUCInstallationConfiguration);
             Controls.Add(buttonLunchInstallation);
@@ -183,5 +195,6 @@
         private Button buttonLunchInstallation;
         private FlowLayoutPanel flowLayoutPanelUCInstallationConfiguration;
         private ProgressBar progressBarTraitement;
+        private Button button1;
     }
 }
