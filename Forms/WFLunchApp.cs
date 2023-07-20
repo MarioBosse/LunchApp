@@ -57,13 +57,13 @@ namespace LunchApp.Forms
                 textBoxDefaultInstallationPath.Text = _cnf.Pathname;
                 buttonPlus.Enabled = true;
                 flowLayoutPanelUCInstallationConfiguration.Enabled = true;
-                foreach (Models.CNF cnf in _cnf.CNF)
-                {
-                    nextID = nextID > cnf.ID ? nextID : cnf.ID;
-                    FormLunchAppConfigurator form = new FormLunchAppConfigurator(_cnf.Pathname, cnf);
-                    form.SetReady();
-                    flowLayoutPanelUCInstallationConfiguration.Controls.Add(form);
-                }
+                //foreach (Models.Installation cnf in _cnf.CNF.Installations)
+                //{
+                //    nextID = nextID > cnf.ID ? nextID : cnf.ID;
+                //    FormLunchAppConfigurator form = new FormLunchAppConfigurator(_cnf.Pathname, cnf);
+                //    form.SetReady();
+                //    flowLayoutPanelUCInstallationConfiguration.Controls.Add(form);
+                //}
             }
         }
         private void buttonRootInstallationPath_Click(object sender, EventArgs e)
@@ -200,6 +200,7 @@ namespace LunchApp.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
+            int cpt = 0;
             Process[] pList = Process.GetProcesses();
             Debug.WriteLine("-------------------------------------------------------------------------");
             foreach (Process p in pList)
@@ -207,8 +208,10 @@ namespace LunchApp.Forms
                 if (p.MainWindowTitle.Length > 0)
                 {
                     Debug.WriteLine("Process : {0} ID : {1} Window title {2}", p.ProcessName, p.Id, p.MainWindowTitle);
+                    cpt++;
                 }
             }
+            Debug.WriteLine("Nombre de fenêtre : {0}, process : {1}", cpt, pList.Length);
             //IO.FocusMonitor fm = new FocusMonitor();
         }
     }

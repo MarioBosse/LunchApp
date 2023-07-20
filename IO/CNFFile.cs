@@ -1,5 +1,6 @@
 ﻿using LunchApp.Models;
 using LunchApp.UserControls.UCLunchAppConfigurator;
+using Newtonsoft.Json;
 using System.Text;
 
 namespace LunchApp.IO
@@ -7,11 +8,9 @@ namespace LunchApp.IO
     public partial class CNFFile : Fichier
     {
         public String Pathname { get;private set; } = String.Empty;
-        private String Header = "ID,IsRunning,NbReboot,NbRebootDone,InstallationDone,InstallationPath,Program2Execute";
-        private String _format = "{0,2},{1,9},{2,8},{3,12},{4,16},{5},{6}";
         public String CnfFilename { get; private set; } = String.Empty;
         public String RootPath { get; private set; } = String.Empty;
-        public List<CNF> CNF { get; private set; } = new List<CNF>();
+        public CNF CNF { get; private set; } = new CNF();
         public String _filename { get; private set; } = String.Empty;
         public UInt16 NbProgress { get; private set; }
 
@@ -33,29 +32,35 @@ namespace LunchApp.IO
         }
         private void ReadConfig()
         {
-            List<String> result = Encoding.ASCII.GetString(ReadAll()).Split('\n').ToList();
-            CNF.Clear();
+            //string content = ReadAll();
+            var content = File.ReadAllText(CompleteFilename);
+            var result = JsonConvert.DeserializeObject<CNF>(content);
+
+
+            if (result == null) return;
+
+            CNF.Installation.Clear();
             NbProgress = 0;
 
-            if(result.Count >= 3)
+            if (result.Installation.Count > 0)
             {
-                Pathname = result[0];
-                if (result[2].Length > 0)
+                Pathname = result.FileServer;
+                if (result.Installation.Count > 0)
                 {
-                    for (int i = 2; i < result.Count - 1; i++)
+                    foreach (Installation inst in result.Installation)
                     {
-                        String[] cnf = result[i].Split(',');
-                        CNF.Add(new CNF()
+                        CNF.Installation.Add(new Installation()
                         {
-                            ID = Convert.ToUInt16(cnf[0]),
-                            IsRunning = Convert.ToBoolean(cnf[1]),
-                            NbReboot = Convert.ToUInt16(cnf[2]),
-                            NbRebootDone = Convert.ToUInt16(cnf[3]),
-                            InstallationDone = Convert.ToBoolean(cnf[4]),
-                            Path = cnf[5],
-                            Programm = cnf[6]
+                            ID = inst.ID,
+                            IsRunning = inst.IsRunning,
+                            NbReboot = inst.NbReboot,
+                            NbRebootDone = inst.NbReboot,
+                            InstallationDone = inst.InstallationDone,
+                            SourcePath = inst.SourcePath,
+                            SourceFilename = inst.SourceFilename,
+                            WaitOnReboot = inst.WaitOnReboot
                         });
-                        NbProgress += (UInt16)(CNF[^1].NbReboot + 1);
+                        NbProgress += (UInt16)(CNF.Installation[^1].NbReboot + 1);
                     }
                 }
             }
@@ -68,16 +73,16 @@ namespace LunchApp.IO
 
         private void WriteConfig()
         {
-            String toWrite = "";
-            toWrite += Pathname + '\n';
-            toWrite += Header + '\n';
-            foreach(CNF cnf in CNF)
-            {
-                toWrite += String.Format(_format, cnf.ID, cnf.IsRunning, cnf.NbReboot, cnf.NbRebootDone, cnf.InstallationDone, cnf.Path, cnf.Programm);
-                toWrite += "\n";
-            }
-            toWrite.Append<char>((char)0x1a);
-            WriteFile(toWrite);
+            //String toWrite = "";
+            //toWrite += Pathname + '\n';
+            //toWrite += Header + '\n';
+            //foreach(CNF cnf in CNF)
+            //{
+            //    toWrite += String.Format(_format, cnf.ID, cnf.IsRunning, cnf.NbReboot, cnf.NbRebootDone, cnf.InstallationDone, cnf.Path, cnf.Programm);
+            //    toWrite += "\n";
+            //}
+            //toWrite.Append<char>((char)0x1a);
+            //WriteFile(toWrite);
             Close();
             Open();
             ReadConfig();
@@ -85,17 +90,17 @@ namespace LunchApp.IO
         public void BuildCNF(Control.ControlCollection controls)
         {
             UInt16 posID = 1;
-            CNF.Clear();
+            //CNF.Installations .Clear();
             foreach (FormLunchAppConfigurator control in controls)
             {
-                CNF.Add(new CNF { ID = posID++,
-                                  IsRunning = control.IsRunning,
-                                  NbReboot = Convert.ToUInt16(control.numericUpDownNbReboot.Value),
-                                  NbRebootDone = control.NbRebootDone,
-                                  InstallationDone = (control.checkBoxInstallationState.CheckState == CheckState.Indeterminate ||
-                                                     (control.checkBoxInstallationState.CheckState == CheckState.Unchecked) ? false : true),
-                                  Path = control.textBoxProgramPath.Text,
-                                  Programm = control.textBoxProgramToLunch.Text});
+                //CNF.Installations.Add(new Installation { ID = posID++,
+                //                  IsRunning = control.IsRunning,
+                //                  NbReboot = Convert.ToUInt16(control.numericUpDownNbReboot.Value),
+                //                  NbRebootDone = control.NbRebootDone,
+                //                  InstallationDone = (control.checkBoxInstallationState.CheckState == CheckState.Indeterminate ||
+                //                                     (control.checkBoxInstallationState.CheckState == CheckState.Unchecked) ? false : true),
+                //                  SourcePath = control.textBoxProgramPath.Text,
+                //                  SourceFilename = control.textBoxProgramToLunch.Text});
             }
             WriteConfig();
         }

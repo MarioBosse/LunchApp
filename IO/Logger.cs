@@ -18,7 +18,7 @@
         public long AddLogging(String message, String status)
         {
             WriteLine(BuildLoggingMessage(message, status));
-            return Lenght;
+            return 0;
         }
 
         private String BuildLoggingMessage(String message, String status)

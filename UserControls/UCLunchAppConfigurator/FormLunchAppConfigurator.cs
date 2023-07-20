@@ -18,7 +18,7 @@ namespace LunchApp.UserControls.UCLunchAppConfigurator
             DefaultPathInstallation = defaultPath;
             InitializeComponent();
         }
-        public FormLunchAppConfigurator(String defaultPath, LunchApp.Models.CNF cnf)
+        public FormLunchAppConfigurator(String defaultPath, Installation cnf)
         {
             DefaultPathInstallation = defaultPath;
             InitializeComponent();
@@ -28,8 +28,8 @@ namespace LunchApp.UserControls.UCLunchAppConfigurator
                 ID = cnf.ID;
             }
             InstallationDone = cnf.InstallationDone;
-            textBoxProgramPath.Text = cnf.Path;
-            textBoxProgramToLunch.Text = cnf.Programm;
+            textBoxProgramPath.Text = cnf.SourcePath;
+            textBoxProgramToLunch.Text = cnf.SourceFilename;
             numericUpDownNbReboot.Value = cnf.NbReboot;
             IsRunning = cnf.IsRunning;
 

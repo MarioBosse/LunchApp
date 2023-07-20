@@ -11,8 +11,7 @@ namespace LunchApp.IO
         public String Path { get; private set; } = String.Empty;
         public String Extension { get; private set; } = String.Empty;
 
-        public FileStream? file;
-        public long Lenght { get { return (file != null ? file.Length : 0); } }
+        public StreamReader file;
 
         public Fichier() 
         {
@@ -38,39 +37,39 @@ namespace LunchApp.IO
         }
         public void Open()
         {
-            file = new FileStream(CompleteFilename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+            //file = new FileStream(CompleteFilename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
         }
         public void Close()
         {
             if(file != null)
                 file.Close();
         }
-        public Byte[] ReadAll()
+        public String ReadAll()
         {
-            byte[] bytes = new byte[file != null?file.Length:0];
-            int buffer = file != null?file.Read(bytes, 0, (int)file.Length):0;
-            return bytes;
+            file = new StreamReader(CompleteFilename);
+            String r = file.ReadToEnd();
+            return r;
         }
         public void WriteFile(String buffer)
         {
             if (file != null)
             {
-                file.Position = 0;
-                file.Write(Encoding.ASCII.GetBytes(buffer), 0, buffer.Length);
+                //file.Position = 0;
+                //file.Write(Encoding.ASCII.GetBytes(buffer), 0, buffer.Length);
             }
         }
         public void Write(String text)
         {
             if (file != null)
             {
-                file.Write(Encoding.ASCII.GetBytes(text), 0, text.Length);
+                //file.Write(Encoding.ASCII.GetBytes(text), 0, text.Length);
             }
         }
         public void WriteLine(String text)
         {
             if (file != null)
             {
-                file.Write(Encoding.ASCII.GetBytes(text + '\n'), 0, text.Length);
+                //file.Write(Encoding.ASCII.GetBytes(text + '\n'), 0, text.Length);
             }
         }
         public void ReplaceTextFile(String[] text)
